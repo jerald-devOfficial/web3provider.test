@@ -1,16 +1,14 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
 import { skaleEuropaTestnet } from 'wagmi/chains'
-import { injected, metaMask, walletConnect } from 'wagmi/connectors'
+import { walletConnect } from 'wagmi/connectors'
 
 export function getConfig() {
   return createConfig({
     chains: [skaleEuropaTestnet],
     connectors: [
-      injected(),
       walletConnect({
         projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
       }),
-      metaMask(),
     ],
     storage: createStorage({
       storage: cookieStorage,
