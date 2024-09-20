@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3200",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
+    "@web3modal/wagmi": "^5.1.9",
     "encoding": "^0.1.13",
     "next": "14.2.12",
     "pino-pretty": "^11.2.2",
