@@ -2,6 +2,7 @@
 
 import { useAccount, useBalance, useBlockNumber, useChainId, useConnect, useDisconnect } from 'wagmi';
 import { formatEther } from 'viem';
+import { useMemo } from 'react';
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -10,6 +11,17 @@ export default function Home() {
   const chainId = useChainId();
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
+
+  const uniqueConnectors = useMemo(() => {
+    const seen = new Set();
+    return connectors.filter((connector) => {
+      if (seen.has(connector.name)) {
+        return false;
+      }
+      seen.add(connector.name);
+      return true;
+    });
+  }, [connectors]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-b from-blue-500 to-purple-600 text-white">
@@ -21,7 +33,7 @@ export default function Home() {
         {!isConnected ? (
           <div>
             <h2 className="text-2xl">Connect Your Wallet</h2>
-            {connectors.map((connector) => (
+            {uniqueConnectors.map((connector) => (
               <button
                 key={connector.id}
                 onClick={() => connect({ connector })}
